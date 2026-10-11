@@ -1,0 +1,24 @@
+name: Shared Deploy Workflow
+
+# Этот блок говорит, что воркфлоу можно вызывать из ДРУГИХ репозиториев
+on:
+  workflow_call:
+    inputs:
+      target_env:
+        required: false
+        type: string
+        default: 'production'
+
+jobs:
+  run-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Скачиваем код приложения
+        uses: actions/checkout@v4
+
+      - name: Запуск деплоя
+        run: |
+          echo "🚀 Начинаем деплой приложения!"
+          echo "Сервер окружения: ${{ inputs.target_env }}"
+          echo "Ветка: ${{ github.ref_name }}"
+          # Сюда позже добавим реальные команды (ssh, docker compose, etc.)
